@@ -9,7 +9,9 @@ const squash = (s) => s.replace(/\[([^\]]+)\]\((\/[^)\s]*)\)/g, '$1').replace(/[
 const LEAF = 'h1,h2,h3,h4,h5,p,li,a,span,dt,dd,blockquote,label,button,td,th,strong';
 
 let missingTotal = 0;
-for (const path of Object.keys(pages)) {
+// /contact is intentionally replaced by the builder's own contact page.
+const checked = Object.keys(pages).filter((p) => p !== '/contact');
+for (const path of checked) {
   const res = await fetch(ORIGIN + path);
   const { document: od } = parseHTML(await res.text());
   const main = od.querySelector('main');
@@ -31,5 +33,5 @@ for (const path of Object.keys(pages)) {
   missingTotal += missing.size;
   console.log(`${missing.size ? 'MISSING' : 'ok     '} ${path}${missing.size ? '\n   - ' + [...missing].join('\n   - ') : ''}`);
 }
-console.log(`\n${Object.keys(pages).length} pages checked, ${missingTotal} missing text fragments.`);
+console.log(`\n${checked.length} pages checked, ${missingTotal} missing text fragments.`);
 process.exit(missingTotal ? 1 : 0);

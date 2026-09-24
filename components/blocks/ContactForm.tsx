@@ -4,14 +4,15 @@ import { useState, type FormEvent } from 'react';
 import clsx from 'clsx';
 import { ArrowRight, CheckCircle } from '@phosphor-icons/react';
 import Html from '@/components/ui/Html';
+import { AAHIL } from '@/lib/aahil';
 
 type Field = { name: string; type: string; label: string; required: boolean };
 
 /**
  * Same fields and validation as the live form. The static build has no backend,
- * so a valid submission opens a pre-filled email to hello@ryzoe.com.
+ * so a valid submission opens a pre-filled email to the site's builder.
  */
-export default function ContactForm({ fields, notes = [] }: { fields: Field[]; notes?: string[] }) {
+export default function ContactForm({ fields, notes = [], to = AAHIL.email }: { fields: Field[]; notes?: string[]; to?: string }) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
 
@@ -29,7 +30,7 @@ export default function ContactForm({ fields, notes = [] }: { fields: Field[]; n
     if (Object.keys(next).length) return;
     const body = fields.map((f) => `${f.label}: ${String(data.get(f.name) ?? '').trim()}`).join('\n');
     const subject = `Project inquiry from ${String(data.get('name') ?? '').trim()}`;
-    window.location.href = `mailto:hello@ryzoe.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
   };
 
@@ -38,7 +39,7 @@ export default function ContactForm({ fields, notes = [] }: { fields: Field[]; n
       <div className="flex min-h-[420px] flex-col items-start justify-center rounded-[2rem] bg-surface p-10 ring-1 ring-inset ring-black/[0.05]">
         <CheckCircle size={40} weight="light" className="text-[#34c759]" />
         <p className="mt-6 text-[1.6rem] font-semibold tracking-[-0.03em] text-ink">Your email app should now be open.</p>
-        <p className="mt-2 text-muted">Send the pre-filled message and we will respond with a practical next step.</p>
+        <p className="mt-2 text-muted">Send the pre-filled message and I will get back to you.</p>
         <button type="button" onClick={() => setSent(false)} className="mt-8 text-sm font-medium text-ink underline underline-offset-4">
           Edit your brief
         </button>

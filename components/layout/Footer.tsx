@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { asset } from '@/lib/base';
+import { AAHIL } from '@/lib/aahil';
 
 const COLS = [
   { title: 'Company', links: [['About', '/about'], ['Careers', '/careers'], ['Contact', '/contact']] },
@@ -56,7 +57,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Ryzoe. All rights reserved.</p>
+          <p>
+            © 2026 Ryzoe. All rights reserved.{' '}
+            <Link href="/contact" className="text-white/70 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white">
+              Redesign concept designed &amp; built by {AAHIL.name}
+            </Link>
+          </p>
           <div className="flex gap-6">
             <Link href="/privacy-policy" className="transition-colors hover:text-white">Privacy Policy</Link>
             <Link href="/terms" className="transition-colors hover:text-white">Terms</Link>

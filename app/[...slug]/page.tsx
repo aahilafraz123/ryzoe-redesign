@@ -11,7 +11,7 @@ export const dynamicParams = false;
 
 export function generateStaticParams() {
   return allPaths()
-    .filter((p) => p !== '/')
+    .filter((p) => p !== '/' && p !== '/contact')
     .map((p) => ({ slug: p.slice(1).split('/') }));
 }
 

@@ -5,11 +5,14 @@ import './globals.css';
 import GlassNav from '@/components/layout/GlassNav';
 import Footer from '@/components/layout/Footer';
 import MotionDirector from '@/components/motion/MotionDirector';
+import MadeBy from '@/components/layout/MadeBy';
 
 export const metadata: Metadata = {
   title: 'Ryzoe | Software & AI Solutions — Sri Lanka',
   description:
     "Sri Lanka's Next-Generation Software & AI Solutions Company. Websites, apps, SaaS, AI, cloud, and smart systems for growing businesses.",
+  authors: [{ name: 'Aahil Afraz', url: 'https://aahilafraz.com/#/vault' }],
+  creator: 'Aahil Afraz',
   icons: { icon: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/favicon.svg` },
 };
 
@@ -31,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <MadeBy />
       </body>
     </html>
   );

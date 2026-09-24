@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { asset } from '@/lib/base';
+import { AAHIL } from '@/lib/aahil';
 import { getLenis } from '@/components/motion/MotionDirector';
 
 export const NAV = [
@@ -149,7 +150,7 @@ export default function GlassNav() {
             ))}
           </ul>
           <div data-m="" className="flex items-center justify-between text-sm text-white/50">
-            <a href="mailto:hello@ryzoe.com" tabIndex={open ? 0 : -1}>hello@ryzoe.com</a>
+            <a href={`mailto:${AAHIL.email}`} tabIndex={open ? 0 : -1}>{AAHIL.email}</a>
             <Link href="/careers" tabIndex={open ? 0 : -1}>Careers</Link>
           </div>
         </div>
