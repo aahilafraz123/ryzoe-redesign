@@ -1,0 +1,272 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-canvas: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-ink: #1d1d1f;
+  --color-muted: #6e6e73;
+  --color-faint: #86868b;
+  --color-line: rgb(0 0 0 / 0.08);
+  --color-night: #000000;
+  --color-night-2: #0b0b0c;
+  --color-night-3: #161617;
+  --color-accent: #0071e3;
+  --color-accent-soft: #2997ff;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+  }
+  body {
+    background: var(--color-canvas);
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  ::selection {
+    background: rgb(0 113 227 / 0.18);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .display {
+    font-size: clamp(2.2rem, 5.4vw, 5.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .headline {
+    font-size: clamp(2rem, 3.8vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+  .title-lg {
+    font-size: clamp(1.35rem, 1.8vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  .lede {
+    font-size: clamp(1.1rem, 1.35vw, 1.3rem);
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  /* Split-heading word masks */
+  .split-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .split-word > span {
+    display: inline-block;
+    will-change: transform;
+  }
+
+  /* Prose for inline copy + articles */
+  .prose-ryzoe {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #3a3a3c;
+  }
+  .prose-ryzoe a,
+  .inline-links a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: rgb(0 0 0 / 0.25);
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.3s;
+  }
+  .prose-ryzoe a:hover,
+  .inline-links a:hover {
+    text-decoration-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+  .dark-scope .inline-links a {
+    color: #f5f5f7;
+    text-decoration-color: rgb(255 255 255 / 0.3);
+  }
+  .prose-ryzoe strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .prose-ryzoe code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: rgb(0 0 0 / 0.05);
+    padding: 0.1em 0.35em;
+    border-radius: 6px;
+  }
+
+  /* Grain overlay */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Spotlight card */
+  .spot {
+    --mx: 50%;
+    --my: 50%;
+  }
+  .spot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease-soft);
+    background: radial-gradient(420px circle at var(--mx) var(--my), rgb(0 113 227 / 0.07), transparent 60%);
+  }
+  .spot:hover::before {
+    opacity: 1;
+  }
+
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, -4%, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Pre-hide animated elements until MotionDirector runs (html.js is set inline in <head>). */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal]:not([data-stagger]),
+  html.js [data-reveal][data-stagger] > * {
+    opacity: 0;
+  }
+  html.js [data-split] .split-word > span {
+    transform: translateY(115%);
+  }
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(220%);
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes ticker {
+  to {
+    transform: translateY(-50%);
+  }
+}
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes spin-centered {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

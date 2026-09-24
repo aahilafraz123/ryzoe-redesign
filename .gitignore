@@ -1,0 +1,10 @@
+node_modules/
+.next/
+out/
+.playwright-mcp/
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+.agents/
+.claude/
+skills-lock.json
